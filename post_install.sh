@@ -10,9 +10,10 @@ pip_pip () {
 }
 
 add_hass () {
-  install -d -g 8123 -o 8123 -m 775 -- /home/${v2srv_user}
+  # install -d -g 8123 -o 8123 -m 775 -- /home/${v2srv_user}
   pw addgroup -g 8123 -n ${v2srv_user}
   pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -s /usr/local/bin/bash -G dialer -c "Daemon user for Home Assistant"
+  chmod -R g=u /home/${v2srv_user}; chown -R ${v2srv_user}:${v2srv_user} /home/${v2srv_user}
 }
 
 install_configurator () {
@@ -35,7 +36,7 @@ install_homeassistant () {
 
 install_appdaemon () {
   v2srv=appdaemon
-    install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/{v2srv} || exit
+    install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
   screen -dmS scrn_env su - hass -c "bash /root/post_install.sh appdaemon-virt"
   screen -r scrn_env || exit
     start_v2srv
@@ -68,7 +69,7 @@ start_v2srv () {
   chmod +x /usr/local/etc/rc.d/${v2srv}
   sysrc -f /etc/rc.conf ${v2srv}_enable=yes
   service ${v2srv} start; sleep 1
-  echo "Checking on ${v2srv}..."; sleep 1
+  echo "Checking on ${v2srv}..."; sleep 2
   service ${v2srv} status
 }
 
@@ -91,9 +92,9 @@ do_it () {          # - Install this shit already! ---
 
   add_hass || exit    # Problems already :( -- I quit!
    pip_pip
-    install_homeassistant
-    install_configurator
-    install_appdaemon
+    install_homeassistant; sleep 2
+    install_configurator; sleep 2
+    install_appdaemon; sleep 1
   
   echo; echo " Finished. OK!"; exit
 }
