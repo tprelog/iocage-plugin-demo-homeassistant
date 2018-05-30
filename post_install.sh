@@ -3,9 +3,11 @@
 v2srv_user=hass
 v2srv_uid=8123
 
-python3.6 -m ensurepip
-pip3 install --upgrade pip
-pip3 install --upgrade virtualenv
+pip_pip () {
+ python3.6 -m ensurepip
+ pip3 install --upgrade pip
+ pip3 install --upgrade virtualenv
+}
 
 add_hass () {
   install -d -g 8123 -o 8123 -m 775 -- /home/${v2srv_user}
@@ -73,13 +75,12 @@ start_v2srv () {
 do_it () {          # - Install this shit already! ---
 
   add_hass || exit    # Problems already :( -- I quit!
-
+   pip_pip
     install_homeassistant
     install_configurator
     install_appdaemon
   
   echo; echo " Finished. OK!"; exit
-
 }
 
 do_it
