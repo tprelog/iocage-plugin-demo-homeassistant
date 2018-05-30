@@ -10,9 +10,8 @@ pip_pip () {
 }
 
 add_hass () {
-  # install -d -g 8123 -o 8123 -m 775 -- /home/${v2srv_user}
   pw addgroup -g 8123 -n ${v2srv_user}
-  pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -s /usr/local/bin/bash -G dialer -c "Daemon user for Home Assistant"
+  pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -s /usr/local/bin/bash -G dialer -c "Daemon for HA"
   chmod -R g=u /home/${v2srv_user}; chown -R ${v2srv_user}:${v2srv_user} /home/${v2srv_user}
 }
 
@@ -24,7 +23,6 @@ install_configurator () {
     start_v2srv
 }
 
-
 install_homeassistant () {
   v2srv=homeassistant
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
@@ -33,7 +31,6 @@ install_homeassistant () {
     start_v2srv
 }
 
-
 install_appdaemon () {
   v2srv=appdaemon
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
@@ -41,7 +38,6 @@ install_appdaemon () {
   screen -r scrn_env || exit
     start_v2srv
 }
-
 
 homeassistant_virt () {
   v2srv=homeassistant
@@ -53,7 +49,6 @@ homeassistant_virt () {
     exit
 }
 
-
 appdaemon_virt () {
   v2srv=appdaemon
     echo "Installing ${v2srv} virtualenv for: `whoami`"; echo
@@ -64,7 +59,6 @@ appdaemon_virt () {
     exit
 }
 
-
 start_v2srv () {
   chmod +x /usr/local/etc/rc.d/${v2srv}
   sysrc -f /etc/rc.conf ${v2srv}_enable=yes
@@ -73,32 +67,23 @@ start_v2srv () {
   service ${v2srv} status
 }
 
-
 case $@ in
-  
   appdaemon-virt)
     appdaemon_virt
-    ;;
-
+   ;;
   homeassistant-virt)
     homeassistant_virt
-    ;;
-
+   ;;
 esac
 
-
-
-do_it () {          # - Install this shit already! ---
-
-  add_hass || exit    # Problems already :( -- I quit!
+do_it () {         # let's nstall this shit already! 
+  add_hass || exit   # problems already -- just quit
    pip_pip
     install_homeassistant; sleep 2
-    install_configurator; sleep 2
-    install_appdaemon; sleep 1
-  
+    install_configurator;  sleep 2
+    install_appdaemon;     sleep 1
+   chmod -R g=u /home/${v2srv_user}
   echo; echo " Finished. OK!"; exit
 }
 
-
 do_it
-

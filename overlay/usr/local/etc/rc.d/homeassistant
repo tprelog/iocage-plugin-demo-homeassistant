@@ -73,6 +73,6 @@ homeassistant_postcmd()
     rm -f -- "${pidfile_child}"
 }
 
-run_rc_command "$1"                           # start homeassistant then
-${pause}                                      # wait a few seconds before 
+run_rc_command "$1"                          # start homeassistant then
+${pause}                                     # wait a few seconds before (if we created a new config)
 chmod -R g=u "${homeassistant_config_dir}"   # setting group permissions equal to user permissions

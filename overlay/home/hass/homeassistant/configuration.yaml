@@ -70,7 +70,8 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 
-# This adds HA Dashboard and the Configurator
+
+# Add Configurator & HA Dashboard to the side panel
 panel_iframe:
   hadashboard:
     title: HA Dashboard
@@ -81,9 +82,10 @@ panel_iframe:
     icon: mdi:wrench
     url: http://192.0.1.143:3218
 
-## Ready for you MQTT Broker
+
+## Ready for mqtt
 # mqtt:
-  # broker: 192.0.1.16
+  # broker: 0.0.0.0
   # port: 1883
   # client_id: homeassistant
   # keepalive: 60
@@ -91,9 +93,8 @@ panel_iframe:
   # password: !secret mqtt_passwd
 
 
-## Aeotec ZW090 Z-Stick GEN5 example for FreeNAS  
+## Aeotec ZW090 Z-Stick GEN5 Example for FreeNAS  
 # zwave:
   # usb_path: /dev/cuaU0
   # network_key: !secret zwave_key
   # config_path: /srv/homeassistant/lib/python3.6/site-packages/python_openzwave/ozw_config
-  
