@@ -27,7 +27,7 @@ install_configurator () {
 install_homeassistant () {
   v2srv=homeassistant
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
-  screen -dmS scrn_env su - hass -c bash "/root/post_install.sh homeassistant_virt"
+  screen -dmS scrn_env su - hass -c bash "/root/post_install.sh ${v2srv}-virt"
   screen -r scrn_env || exit
     start_v2srv
 }
@@ -36,7 +36,7 @@ install_homeassistant () {
 install_appdaemon () {
   v2srv=appdaemon
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/{v2srv} || exit
-  screen -dmS scrn_env su - hass -c bash "/root/post_install.sh appdaemon_virt"
+  screen -dmS scrn_env su - hass -c bash "/root/post_install.sh ${v2srv}-virt"
   screen -r scrn_env || exit
     start_v2srv
 }
@@ -82,6 +82,15 @@ do_it () {          # - Install this shit already! ---
   
   echo; echo " Finished. OK!"; exit
 }
+
+
+case $@ in
+  
+  ${v2srv}-virt)
+    {v2srv}_virt
+    ;;
+
+esac
 
 do_it
 
