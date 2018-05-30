@@ -76,11 +76,11 @@ panel_iframe:
   hadashboard:
     title: HA Dashboard
     icon: mdi:view-dashboard-variant
-    url: http://192.0.1.143:5050
+    url: http://192.0.1.148:5050
   configurator:
     title: Configurator
     icon: mdi:wrench
-    url: http://192.0.1.143:3218
+    url: http://192.0.1.148:3218
 
 
 ## Ready for mqtt
