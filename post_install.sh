@@ -13,9 +13,6 @@ add_hass () {
   pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -s /usr/local/bin/bash -G dialer -c "Daemon user for Homeassistant"
 }
 
-add_hass || exit    # Problems already :( -- I quit!
-
-
 install_configurator () {
   v2srv=configurator
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
@@ -28,7 +25,7 @@ install_configurator () {
 install_homeassistant () {
   v2srv=homeassistant
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
-  screen -dmS scrn_env su - "${v2srv_user}" -c "bash /root/post_install.sh ${v2srv}_virt"
+  screen -dmS scrn_env su - hass -c "bash /root/post_install.sh ${v2srv}_virt"
   screen -r scrn_env || exit
     start_v2srv
 }
@@ -37,29 +34,31 @@ install_homeassistant () {
 install_appdaemon () {
   v2srv=appdaemon
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/{v2srv} || exit
-  screen -dmS scrn_env su - "${v2srv_user}" -c "bash /root/post_install.sh ${v2srv}_virt"
+  screen -dmS scrn_env su - hass -c "bash /root/post_install.sh ${v2srv}_virt"
   screen -r scrn_env || exit
     start_v2srv
 }
 
 
 homeassistant_virt () {
-  echo "Installing ${v2srv} virtualenv for: `whoami`"; echo
-  sleep 2 # sleep 2 so we check we're the right person above
+  v2srv=homeassistant
+    echo "Installing ${v2srv} virtualenv for: `whoami`"; echo
+    sleep 2 # sleep 2 so we check we're the right person above
   virtualenv -p /usr/local/bin/python3.6 /srv/homeassistant
   source /srv/homeassistant/bin/activate
   pip3 install --upgrade homeassistant
-  exit
+    exit
 }
 
 
 appdaemon_virt () {
-  echo "Installing ${v2srv} virtualenv for: `whoami`"; echo
-  sleep 2 # sleep 2 so we check we're the right person above
+  v2srv=appdaemon
+    echo "Installing ${v2srv} virtualenv for: `whoami`"; echo
+    sleep 2 # sleep 2 so we check we're the right person above
   virtualenv -p /usr/local/bin/python3.6 /srv/appdaemon
   source /srv/appdaemon/bin/activate
   pip3 install --pre appdaemon
-  exit
+    exit
 }
 
 
@@ -71,9 +70,17 @@ start_v2srv () {
   service ${v2srv} status
 }
 
-# - Install this shit already! ---
-      install_homeassistant
-      install_configurator
-      install_appdaemon
+do_it () {          # - Install this shit already! ---
 
-echo; echo " Finished. OK!"; exit
+  add_hass || exit    # Problems already :( -- I quit!
+
+    install_homeassistant
+    install_configurator
+    install_appdaemon
+  
+  echo; echo " Finished. OK!"; exit
+
+}
+
+do_it
+
