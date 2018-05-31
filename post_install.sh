@@ -72,16 +72,26 @@ start_v2srv () {
   service ${v2srv} status
 }
 
+colors () {                               # Defien Some Colors for Messages
+  red=$'\e[1;31m'
+  grn=$'\e[1;32m'
+  yel=$'\e[1;33m'
+  blu=$'\e[1;34m'
+  mag=$'\e[1;35m'
+  cyn=$'\e[1;36m'
+  end=$'\e[0m'
+}                                         # Call Function: colors
+
 end_report () {                 # read all about it!
   echo; echo; echo; echo
-    echo " Status Report: ${v2srv_host}"; echo
+    echo " ${red}Status Report${end}: ${grn}${v2srv_host}${end}"; echo
     echo "      $(service appdaemon status)"
     echo "  $(service homeassistant status)"
     echo "   $(service configurator status)"
   echo   
-    echo " Home Assistant: http://${v2srv_ip}:8123"
-    echo "    HADashboard: http://${v2srv_ip}:5050"
-    echo "   Configurator: http://${v2srv_ip}:3218"
+    echo " ${blu}Home Assistant${end}: http://${v2srv_ip}:${blu}8123${end}"
+    echo "    ${mag}HADashboard${end}: http://${v2srv_ip}:${mag}5050${end}"
+    echo "   ${cyn}Configurator${end}: http://${v2srv_ip}:${cyn}3218${end}"
   echo
   echo; echo " Finished!"; exit    
 }
