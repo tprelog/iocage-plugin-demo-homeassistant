@@ -57,12 +57,17 @@ alive:
 
 welcome:
     widget_type: label
-    text: "Welcome to HA Dashboard!"
+    text: "Welcome to HADashboard!"
+
+dashboard:
+    widget_type: label
+    title: " Did you know? -- HADashboard is part AppDaemon"
+    title2: " https://community.home-assistant.io/t/announcement-appdaemon-beta-3/42962"
 
 wallpanel:
     widget_type: label
     title: "This example is already sized to fit a Fire 7 Tablet but you'll still want a  ' Full Screen '  browser"
-    title2: "Head over to community.home-assistant.io and check out -- WallPanel for Andriod -- "
+    title2: " https://community.home-assistant.io/t/wallpanel-for-android-formerly-homedash/16217 "
 
 weather:
     widget_type: weather
@@ -76,12 +81,12 @@ smallRelaod:
   widget_type: small_reload
 
 layout:
-  - box1 (1x1), welcome (13x1),                                 box15 (1x1)
+  - box1 (1x1), welcome (13x1),                                                       box15 (1x1)
   -            
-  - spacer (1x1), boxA (2x1)
-  - spacer (1x1),  boxB, spacer (1x1),         clock.clock (5x2), spacer (1x1),             reload (2x2) 
-  -
+  - spacer (1x1), boxA (2x1), spacer (2x4),  dashboard (9x1)
+  - spacer (1x1), boxB  
+  -                                          clock.clock (5x2), spacer (2x1),  reload (2x2)
   - spacer (1x1), boxC (2x1)  
-  - spacer (13x1) 
+  - 
   -
-  - box10 (1x1), wallpanel (13x1),                                smallRelaod (1x1)
+  - box10 (1x1), wallpanel (13x1),                                               smallRelaod (1x1)
