@@ -61,7 +61,7 @@ welcome:
 
 dashboard:
     widget_type: label
-    title: " Did you know? -- HADashboard is part AppDaemon"
+    title: " Did you know -- HADashboard is included with AppDaemon"
     title2: " https://community.home-assistant.io/t/announcement-appdaemon-beta-3/42962"
 
 wallpanel:
@@ -83,9 +83,9 @@ smallRelaod:
 layout:
   - box1 (1x1), welcome (13x1),                                                       box15 (1x1)
   -            
-  - spacer (1x1), boxA (2x1), spacer (2x4),  dashboard (9x1)
+  - spacer (1x1), boxA (2x1), spacer,  dashboard (9x1)
   - spacer (1x1), boxB  
-  -                                          clock.clock (5x2), spacer (2x1),  reload (2x2)
+  - spacer (5x1),                                  clock.clock (5x2), spacer (2x1),  reload (2x2)
   - spacer (1x1), boxC (2x1)  
   - 
   -
