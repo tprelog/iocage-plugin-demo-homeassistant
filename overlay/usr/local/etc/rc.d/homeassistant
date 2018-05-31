@@ -60,7 +60,6 @@ homeassistant_precmd()
     
     if [ ! -d "${homeassistant_config_dir}" ]; then
         install -d -g ${homeassistant_group} -o ${homeassistant_user} -m 775 -- "${homeassistant_config_dir}"
-        pause="sleep 5";
     fi
 }
 
