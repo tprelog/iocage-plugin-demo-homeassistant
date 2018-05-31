@@ -1,4 +1,4 @@
 # iocage-plugin-demo-homeassistant
 Artifact file(s) for Home Assistant
 
-This demo plugin includes AppDaemon and the Configurator
+ This homeassisatnt plugin includes appdaemon and the configurator
