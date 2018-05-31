@@ -84,6 +84,7 @@ colors () {                               # Defien Some Colors for Messages
 
 end_report () {                 # read all about it!
   echo; echo; echo; echo
+  colors
     echo " ${red}Status Report${end}: ${grn}${v2srv_host}${end}"; echo
     echo "      $(service appdaemon status)"
     echo "  $(service homeassistant status)"
