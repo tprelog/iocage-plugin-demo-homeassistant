@@ -48,8 +48,6 @@ appdaemon_precmd()
 {
         rc_flags="-f -P ${pidfile} -p ${pidfile_child} /srv/appdaemon/bin/appdaemon -c ${appdaemon_config_dir} ${rc_flags}"
     
-    pause="sleep 1"
-    
     if [ ! -e "${pidfile_child}" ]; then
             install -g ${appdaemon_group} -o ${appdaemon_user} -- /dev/null "${pidfile_child}";
     fi
@@ -72,5 +70,3 @@ appdaemon_postcmd()
 
 sleep 1                                       # appdaemon restart fails to restart appdaemon but appdaemon stop | start works fine
 run_rc_command "$1"                           # hopefully that pause will help
-${pause}                                      # wait a few seconds before 
-chmod -R g=u "${appdaemon_config_dir}"        # setting group permissions equal to user permissions

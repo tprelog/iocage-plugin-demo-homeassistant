@@ -48,10 +48,8 @@ command="/usr/sbin/daemon"
 start_precmd=${name}_precmd
 homeassistant_precmd()
 {
-    rc_flags="-f -P ${pidfile} -p ${pidfile_child} /srv/homeassistant/bin/hass --config ${homeassistant_config_dir} ${rc_flags}"
-    
-    pause="sleep 1"
-    
+      rc_flags="-f -P ${pidfile} -p ${pidfile_child} /srv/homeassistant/bin/hass --config ${homeassistant_config_dir} ${rc_flags}"
+      
     if [ ! -e "${pidfile_child}" ]; then
             install -g ${homeassistant_group} -o ${homeassistant_user} -- /dev/null "${pidfile_child}";
     fi
@@ -74,5 +72,3 @@ homeassistant_postcmd()
 }
 
 run_rc_command "$1"                          # start homeassistant then
-${pause}                                     # wait a few seconds before (if we created a new config)
-chmod -R g=u "${homeassistant_config_dir}"   # setting group permissions equal to user permissions

@@ -3,6 +3,9 @@
 v2srv_user=hass
 v2srv_uid=8123
 
+v2srv_host=$(hostname)
+v2srv_ip=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+
 pip_pip () {
  python3.6 -m ensurepip
  pip3 install --upgrade pip
@@ -11,7 +14,7 @@ pip_pip () {
 
 add_hass () {
   pw addgroup -g 8123 -n ${v2srv_user}
-  pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -s /usr/local/bin/bash -G dialer -c "Daemon for HA"
+  pw adduser -u 8123 -n ${v2srv_user} -d /home/${v2srv_user} -w no -s /usr/local/bin/bash -G dialer -c "homeassistant daemon"
   chmod -R g=u /home/${v2srv_user}; chown -R ${v2srv_user}:${v2srv_user} /home/${v2srv_user}
 }
 
@@ -67,6 +70,20 @@ start_v2srv () {
   service ${v2srv} status
 }
 
+end_report () {                 # read all about it!
+  echo; echo; echo; echo
+    echo " Status Report: ${v2srv_host}"; echo
+    echo "      $(service appdaemon status)"
+    echo "  $(service homeassistant status)"
+    echo "   $(service configurator status)"
+  echo   
+    echo " Home Assistant: http://${v2srv_ip}:8123"
+    echo "    HADashboard: http://${v2srv_ip}:5050"
+    echo "   Configurator: http://${v2srv_ip}:3218"
+  echo
+  echo; echo " Finished!"; exit    
+}
+
 case $@ in
   appdaemon-virt)
     appdaemon_virt
@@ -74,16 +91,20 @@ case $@ in
   homeassistant-virt)
     homeassistant_virt
    ;;
+  end-report)
+    end_report
+   ;;
 esac
 
 do_it () {         # let's nstall this shit already! 
   add_hass || exit   # problems already -- just quit
    pip_pip
     install_homeassistant; sleep 2
-    install_configurator;  sleep 2
-    install_appdaemon;     sleep 1
+    install_appdaemon;     sleep 2
+    install_configurator;  sleep 1
    chmod -R g=u /home/${v2srv_user}
-  echo; echo " Finished. OK!"; exit
 }
 
 do_it
+end_report
+
