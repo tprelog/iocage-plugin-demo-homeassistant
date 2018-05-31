@@ -82,19 +82,19 @@ colors () {                               # Defien Some Colors for Messages
   end=$'\e[0m'
 }                                         # Call Function: colors
 
+colors
 end_report () {                 # read all about it!
   echo; echo; echo; echo
-  colors
-    echo " ${red}Status Report${end}: ${grn}${v2srv_host}${end}"; echo
+    echo " Status Report: ${grn}${v2srv_host}${end}"; echo
     echo "      $(service appdaemon status)"
     echo "  $(service homeassistant status)"
     echo "   $(service configurator status)"
   echo   
-    echo " ${blu}Home Assistant${end}: http://${v2srv_ip}:${blu}8123${end}"
-    echo "    ${mag}HADashboard${end}: http://${v2srv_ip}:${mag}5050${end}"
-    echo "   ${cyn}Configurator${end}: http://${v2srv_ip}:${cyn}3218${end}"
+    echo " ${cyn}Home Assistant${end}: ${grn}http://${v2srv_ip}:8123${end}"
+    echo "    ${cyn}HADashboard${end}: ${grn}http://${v2srv_ip}:5050${end}"
+    echo "   ${cyn}Configurator${end}: ${grn}http://${v2srv_ip}:3218${end}"
   echo
-  echo; echo " Finished!"; exit    
+  echo; echo " ${blu}Finished!${end}"; exit    
 }
 
 case $@ in
