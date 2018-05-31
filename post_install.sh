@@ -28,9 +28,11 @@ install_configurator () {
 
 install_homeassistant () {
   v2srv=homeassistant
+   yaml=/home/hass/homeassistant/configuration.yaml
     install -d -g "${v2srv_user}" -o "${v2srv_user}" -m 775 -- /srv/${v2srv} || exit
   screen -dmS scrn_env su - hass -c "bash /root/post_install.sh homeassistant-virt"
   screen -r scrn_env || exit
+   echo ${yaml} | sed -i .bak "s/xXx.XxX.XxX.xXx/${v2srv_ip}/g" ${yaml}
     start_v2srv
 }
 
