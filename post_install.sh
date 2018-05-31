@@ -84,16 +84,17 @@ colors () {                               # Defien Some Colors for Messages
 
 end_report () {                 # read all about it!
   echo; echo; echo; echo
-    echo " ${red}Status Report${end}: ${grn}${v2srv_host}${end}"; echo
-    echo "      $(service appdaemon status)"
-    echo "  $(service homeassistant status)"
-    echo "   $(service configurator status)"
+  colors
+    echo " ${red}Status Report: ${grn}${v2srv_host}${end}"; echo
+    echo "  ${blu}$(service homeassistant status)${end}"
+    echo "   ${blu}$(service configurator status)${end}"
+    echo "      ${blu}$(service appdaemon status)${end}"
   echo   
-    echo " ${blu}Home Assistant${end}: http://${v2srv_ip}:${blu}8123${end}"
-    echo "    ${mag}HADashboard${end}: http://${v2srv_ip}:${mag}5050${end}"
-    echo "   ${cyn}Configurator${end}: http://${v2srv_ip}:${cyn}3218${end}"
+    echo " ${cyn}Home Assistant: ${grn}http://${v2srv_ip}${cyn}:8123${end}"
+    echo "   ${cyn}Configurator: ${grn}http://${v2srv_ip}${cyn}:3218${end}"
+    echo "    ${cyn}HADashboard: ${grn}http://${v2srv_ip}${cyn}:5050${end}"
   echo
-  echo; echo " Finished!"; exit    
+  echo; echo " ${red}Finished!${end}"; exit    
 }
 
 case $@ in
